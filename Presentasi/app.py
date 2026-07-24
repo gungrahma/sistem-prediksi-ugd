@@ -36,34 +36,17 @@ Aplikasi ini adalah bentuk **Interactive UI Prototype** dari *codebase* model kl
 Sistem memproses teks diagnosa masuk menggunakan **TF-IDF + Random Forest** untuk menentukan prioritas penanganan.
 """)
 
-# Informasi Status Sistem saat ini
 st.info("**Informasi:** Sistem ini berjalan di atas *codebase* eksperimental. Belum terintegrasi dengan SIMRS dan belum melalui validasi klinis menyeluruh oleh Dokter Spesialis Emergensitas.")
 
 st.divider()
 
-
 st.write("### Simulasi Input Diagnosa Pasien")
 
-# Opsi A: Input Teks Manual
+# Input manual text
 diagnosa_input = st.text_area(
     "Masukkan Keluhan Awal Pasien:",
     placeholder="Contoh: Pasien datang dengan trauma kepala akibat kecelakaan, kesadaran menurun dan pendarahan aktif..."
 )
-
-# Opsi B: Contoh Cepat untuk Pengujian Singkat (Sangat berguna saat presentasi!)
-st.write("*Atau pilih contoh kasus di bawah ini untuk simulasi cepat:*")
-contoh_kasus = {
-    "Pilih contoh kasus...": "",
-    "Kasus Gawat Darurat (True Emergency)": "Fraktur terbuka regio femur dextra dengan perdarahan aktif post kll",
-    "Kasus Non-Darurat (False Alarm)": "Pasien mengeluhkan batuk pilek ringan sejak 3 hari lalu tanpa disertai sesak napas"
-}
-pilihan = st.selectbox("Gunakan template kasus:", list(contoh_kasus.keys()))
-
-# Jika template dipilih, timpa input manual
-if pilihan != "Pilih contoh kasus...":
-    diagnosa_input = contoh_kasus[pilihan]
-    st.text_area("Masukkan Teks Diagnosa / Keluhan Awal Pasien: (Diisi otomatis)", value=diagnosa_input, key="disabled_input", disabled=True)
-
 
 if st.button("Jalankan Prediksi Triase", type="primary"):
     if diagnosa_input.strip() == "":
