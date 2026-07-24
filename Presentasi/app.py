@@ -70,7 +70,7 @@ if st.button("Jalankan Prediksi Triase", type="primary"):
         
         if prediksi == 1: 
             st.error("## TRUE EMERGENCY")
-            st.metric(label="Tingkat Keyakinan Model AI", value=f"{prob_emergency:.2f}%")
+            st.metric(label="Tingkat Keyakinan: ", value=f"{prob_emergency:.2f}%")
             st.markdown("""
             **Rekomendasi Tindakan Internal:**
             *   Segera arahkan pasien ke Bed Resusitasi / Trauma.
@@ -78,7 +78,7 @@ if st.button("Jalankan Prediksi Triase", type="primary"):
             """)
         else: 
             st.warning("## FALSE ALARM (NON-EMERGENCY)")
-            st.metric(label="Tingkat Keyakinan Model AI", value=f"{(100 - prob_emergency):.2f}%")
+            st.metric(label="Tingkat Keyakinan: ", value=f"{(100 - prob_emergency):.2f}%")
             st.markdown("""
             **Rekomendasi Tindakan Internal:**
             *   Pasien dapat diarahkan ke area triase hijau atau poliklinik rawat jalan.
