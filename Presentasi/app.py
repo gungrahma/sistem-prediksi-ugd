@@ -53,29 +53,22 @@ if st.button("Jalankan Prediksi Triase", type="primary"):
         st.warning("Silakan masukkan teks diagnosa terlebih dahulu.")
     else:
         with st.spinner("Model AI sedang menganalisis teks klinis..."):
-            # Simulasi delay pemrosesan agar UI terasa responsif dan nyata
             time.sleep(0.6)
             
-            # --- Tahap Pra-pemrosesan (Sesuaikan jika Anda punya fungsi custom cleansing) ---
-            # Catatan: Teks input harus dibersihkan sama persis dengan proses 'Diagnose_Bersih' di Jupyter
             diagnosa_clean = [diagnosa_input.lower()] 
             
-            # --- Tahap Transformasi TF-IDF ---
             X_vectorized = tfidf.transform(diagnosa_clean)
             
-            # --- Tahap Prediksi Model ---
             prediksi = model.predict(X_vectorized)[0]
             
-            # Probabilitas untuk memperkuat keyakinan hasil (Decision Support)
             probabilitas = model.predict_proba(X_vectorized)[0]
             prob_emergency = probabilitas[1] * 100 # Indeks 1 biasanya untuk True Emergency
             
-        # Tampilan Hasil berdasarkan Hasil Klasifikasi
         st.success("Analisis Selesai!")
         
         st.write("### Hasil Prediksi Sistem:")
         
-        if prediksi == 1: # Asumsi 1 = True Emergency
+        if prediksi == 1: 
             st.error("## TRUE EMERGENCY")
             st.metric(label="Tingkat Keyakinan Model AI", value=f"{prob_emergency:.2f}%")
             st.markdown("""
@@ -83,7 +76,7 @@ if st.button("Jalankan Prediksi Triase", type="primary"):
             *   Segera arahkan pasien ke Bed Resusitasi / Trauma.
             *   Notifikasi otomatis dikirimkan ke Dokter Jaga UGD.
             """)
-        else: # Asumsi 0 = False Alarm / Non-Emergency
+        else: 
             st.warning("## FALSE ALARM (NON-EMERGENCY)")
             st.metric(label="Tingkat Keyakinan Model AI", value=f"{(100 - prob_emergency):.2f}%")
             st.markdown("""
