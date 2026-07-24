@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import joblib
 import pandas as pd
@@ -10,9 +11,14 @@ st.set_page_config(
 
 @st.cache_resource
 def load_triage_resources():
-    # Menggunakan cache agar model hanya di-load sekali ke memori
-    vectorizer = joblib.load('tfidf_vectorizer.pkl')
-    model = joblib.load('model_triase_rf.pkl')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    
+    path_vectorizer = os.path.join(BASE_DIR, 'tfidf_vectorizer.pkl')
+    path_model = os.path.join(BASE_DIR, 'model_triase_rf.pkl')
+    
+    vectorizer = joblib.load(path_vectorizer)
+    model = joblib.load(path_model)
+    
     return vectorizer, model
 
 try:
